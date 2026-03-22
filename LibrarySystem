@@ -1,0 +1,50 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+public class LibrarySystem {
+    private List<Book> books = new ArrayList<>();
+    public void addBook(Book book) {
+        books.add(book);
+    }
+    public List<Book> findById(String id) {
+        return books.stream()
+                .filter(b -> id.equals(b.getId()))
+                .collect(Collectors.toList());
+    }
+    public boolean deleteBook(String id) {
+        return books.removeIf(b -> id.equals(b.getId()) && !b.isBorrowed());
+    }
+    public boolean borrowBook(String id) {
+        for (Book b : books) {
+            if (id.equals(b.getId()) && !b.isBorrowed()) {
+                b.setBorrowed(true);
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean returnBook(String id) {
+        for (Book b : books) {
+            if (id.equals(b.getId()) && b.isBorrowed()) {
+                b.setBorrowed(false);
+                return true;
+            }
+        }
+        return false;
+    }
+    public List<Book> getAllBooks() {
+        return new ArrayList<>(books);
+    }
+    public static void main(String[] args) {
+        LibrarySystem library = new LibrarySystem();
+        library.addBook(new Book("1", "Java book"));
+        library.addBook(new Book("2", "css book"));
+        System.out.println("inquiry ID1: " + library.findById("1").get(0).getTitle());
+        library.borrowBook("1");
+        System.out.println("borrow: " + library.findById("1").get(0).isBorrowed());
+        library.returnBook("1");
+        System.out.println("erturn: " + library.findById("1").get(0).isBorrowed());
+        library.deleteBook("2");
+        System.out.println("remain: " + library.getAllBooks().size());
+    }
+}
