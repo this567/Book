@@ -1,24 +1,14 @@
-# Book.java
 public class Book {
-     private int id;
-     private String title;
-     private String genre;
-     public Book(int id, String title, String genre) {
-         this.id = id;
-         this.title = title;
-         this.genre = genre;
-     }
-     public int getId() {
-         return id;
-     }
-     public String getTitle() {
-         return title;
-     }
-     public String getGenre() {
-         return genre;
-     }
-     @Override
-     public String toString() {
-         return "Book{id=" + id + ", title='" + title + "', genre='" + genre + "'}";
-     }
- }
+    private String id;
+    private String title;
+    private boolean borrowed;
+    public Book(String id, String title) {
+        this.id = id;
+        this.title = title;
+        this.borrowed = false;
+    }
+    public String getId() { return id; }
+    public String getTitle() { return title; }
+    public boolean isBorrowed() { return borrowed; }
+    public void setBorrowed(boolean borrowed) { this.borrowed = borrowed; }
+}
